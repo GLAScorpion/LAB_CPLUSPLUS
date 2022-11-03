@@ -1,4 +1,5 @@
 #include "myvector.h"
+#include <iostream>
 //member functions
 /*
 vector::vector(unsigned int dim)
@@ -44,3 +45,17 @@ void vector::safe_set(int index, double value){
     }
     elem[index]  = value;
 }
+vector::vector(const vector& vec)
+    : size{vec.size}, elem{new double[size]}
+{//costruttore di copia
+    std::copy(vec.elem, &vec.elem[size], elem);
+}
+vector::vector(vector&& vec){//costruttore di spostamento
+
+}
+vector& vector::operator=(const vector& vec){//assegnamento per copia
+
+} 
+vector& vector::operator=(vector&& vec){//assegnamento per spostamento
+
+} 
