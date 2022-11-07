@@ -1,0 +1,6 @@
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/es1.out.dir
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/es2.out.dir
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/es3.out.dir
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/testvector.out.dir
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/GLAScorpion/Documents/GitHub/LAB_CPLUSPLUS/LAB3/build/CMakeFiles/rebuild_cache.dir

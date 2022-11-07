@@ -50,6 +50,7 @@ vector::vector(const vector& vec)
 {//costruttore di copia
     std::copy(vec.elem, &vec.elem[size], elem);
 }
+/*
 vector::vector(vector&& vec){//costruttore di spostamento
 
 }
@@ -59,3 +60,4 @@ vector& vector::operator=(const vector& vec){//assegnamento per copia
 vector& vector::operator=(vector&& vec){//assegnamento per spostamento
 
 } 
+*/
