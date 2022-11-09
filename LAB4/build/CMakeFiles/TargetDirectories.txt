@@ -1,0 +1,6 @@
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/rebuild_cache.dir
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/edit_cache.dir
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/testlink.out.dir
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/pal3.out.dir
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/pal2.out.dir
+/home/hulk/1/pc2034731/.ssh/LAB_CPLUSPLUS/LAB4/build/CMakeFiles/pal1.out.dir
