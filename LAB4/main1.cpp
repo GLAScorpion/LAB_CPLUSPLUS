@@ -3,12 +3,10 @@
 using namespace std;
 bool is_palindrome(const string& s);
 int main(){
-    string a = "anna";
-    string b = "annna";
-    string c = "alba";
-    cout << a << " = " << is_palindrome(a) << endl;
-    cout << b << " = " << is_palindrome(b) << endl;
-    cout << c << " = " << is_palindrome(c) << endl;
+    string s;
+    cout << "Inserire stringa\n";
+    cin >> s;
+    cout << s << " = " << is_palindrome(s) << endl;
 }
 bool is_palindrome(const string& s){
     for(int i = 0; i < s.length() / 2; i++){
