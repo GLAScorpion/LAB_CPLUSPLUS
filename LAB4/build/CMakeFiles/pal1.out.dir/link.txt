@@ -1,1 +1,0 @@
-/usr/lib64/ccache/c++ -rdynamic CMakeFiles/pal1.out.dir/main1.cpp.o -o pal1.out 

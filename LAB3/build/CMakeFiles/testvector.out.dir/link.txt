@@ -1,1 +1,0 @@
-/usr/sbin/c++ -rdynamic CMakeFiles/testvector.out.dir/main.cpp.o CMakeFiles/testvector.out.dir/myvector.cpp.o -o testvector.out 
