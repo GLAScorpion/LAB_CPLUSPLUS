@@ -19,8 +19,18 @@ std::string erase(link* elem){
     delete elem;
     return tmp_val;
 }
+std::string print_all(link* lst){
+    std::string s = "{ ";
+    link* elem = lst->front();
+    while(elem){
+        s += "[" + elem->get_value() + "] ";
+        elem = elem->advance(-1);
+    }
+    s+= "}";
+    return s;
+}
 //MEMBER FUNCTIONS
-link* link::find(std::string val){
+link* link::search(std::string val){
     link* elem = this;
     link* old_elem = elem->next;
     do{
@@ -76,15 +86,15 @@ link* link::extract(){
 link* link::advance(int n){
     link* elem = this;
     if(!elem) return nullptr;
-    while(n > 0){
+    while(n < 0){
         if(!elem->next)return nullptr;
         elem = elem->next;
-        n--;
+        n++;
     }
-    while(n < 0){
+    while(n > 0){
         if(!elem->prev) return nullptr;
         elem = elem->prev;
-        n++;
+        n--;
     }
     return elem;
 }

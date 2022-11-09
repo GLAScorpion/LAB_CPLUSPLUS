@@ -3,15 +3,15 @@
 class link{
     public:
         //COSTRUTTORI
-        link(const std::string& val, link* previous = nullptr, link* successive =nullptr)
+        explicit link(const std::string& val, link* previous = nullptr, link* successive =nullptr)
         : value{val}, prev{previous}, next{successive} {}
         ~link(){ delete prev; delete next; }
         //MEMBER FUNCTIONS
         link* insert(link* new_elem);
         link* add(link* new_elem);
-        link* back(); //trova il primo elemento, next == nullptr
-        link* front(); //trova l'ultimo elemento, prev == nullptr
-        link* find(std::string val);
+        link* back(); //trova l'ultimo elemento, next == nullptr
+        link* front(); //trova il primo elemento, prev == nullptr
+        link* search(std::string val);
         link* advance(int n);
         link* extract();     //"erase" come visto a lezione, nessuna gestione della memoria
         link* find(std::string val);
@@ -22,6 +22,7 @@ class link{
         link* next;
 };
 //HELPER FUNCTIONS
+std::string print_all(link* lst);
 std::string erase(link* elem); //ho reinterpretato erase come un'eliminazione con distruzione, ritorna solo il valore del link
 link* pop_back(link* lst);
 link* pop_front(link* lst);
