@@ -5,7 +5,7 @@ class link{
         //COSTRUTTORI
         explicit link(const std::string& val, link* previous = nullptr, link* successive =nullptr)
         : value{val}, prev{previous}, next{successive} {}
-        ~link(){ delete next; }
+        ~link(){ prev->next = nullptr;delete next; }
         //MEMBER FUNCTIONS
         link* insert(link* new_elem);
         link* add(link* new_elem);
