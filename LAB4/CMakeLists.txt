@@ -15,6 +15,4 @@ main.cpp
 )
 add_executable(testlinklist
 testlinklist.cpp
-link.cpp
-linklist.cpp
 )
