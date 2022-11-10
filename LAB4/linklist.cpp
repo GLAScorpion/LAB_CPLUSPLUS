@@ -29,7 +29,7 @@ std::string list::pop_back(){
 }
 std::string list::pop_front(){
     front = front->advance(1);
-    link* elem = lnk::pop_back(front);
+    link* elem = lnk::pop_front(front);
     std::string s = elem->get_value();
     delete elem;
     size--;
