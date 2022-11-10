@@ -1,5 +1,6 @@
 #include <iostream>
 #include "link.h"
+using namespace lnk;
 //HELPER FUNCTIONS
 link* pop_back(link* lst){
     return lst->back()->extract();
@@ -30,6 +31,9 @@ std::string print_all(link* lst){
     return s;
 }
 //MEMBER FUNCTIONS
+std::string& link::get_value_ref(){
+    return value;
+}
 link* link::search(std::string val){
     link* elem = this;
     link* old_elem = elem->next;
