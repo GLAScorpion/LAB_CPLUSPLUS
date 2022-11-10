@@ -14,3 +14,8 @@ add_executable(testlink
 main.cpp
 link.cpp
 )
+add_executable(testlinklist
+testlinklist.cpp
+link.cpp
+linklist.cpp
+)

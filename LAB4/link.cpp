@@ -8,10 +8,10 @@ link* pop_front(link* lst){
     return lst->front()->extract();
 }
 link* push_back(link* lst, link* elem){
-    return lst->back()->insert(elem);
+    return lst->back()->add(elem);
 }
 link* push_front(link* lst, link* elem){
-    return lst->front()->add(elem);
+    return lst->front()->insert(elem);
 }
 std::string erase(link* elem){
     elem->extract();
@@ -24,7 +24,7 @@ std::string print_all(link* lst){
     link* elem = lst->front();
     while(elem){
         s += "[" + elem->get_value() + "] ";
-        elem = elem->advance(-1);
+        elem = elem->advance(1);
     }
     s+= "}";
     return s;
@@ -86,15 +86,15 @@ link* link::extract(){
 link* link::advance(int n){
     link* elem = this;
     if(!elem) return nullptr;
-    while(n < 0){
+    while(n > 0){
         if(!elem->next)return nullptr;
         elem = elem->next;
-        n++;
+        n--;
     }
-    while(n > 0){
+    while(n < 0){
         if(!elem->prev) return nullptr;
         elem = elem->prev;
-        n--;
+        n++;
     }
     return elem;
 }
