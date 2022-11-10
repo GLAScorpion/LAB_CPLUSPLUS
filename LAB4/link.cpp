@@ -49,7 +49,6 @@ link* link::search(std::string val){
 }
 link* link::insert(link* new_elem) { // this_prev -- new_elem -- this
     if (!new_elem) return this;
-    if (!this) return new_elem;
     new_elem->next = this;
     if (this->prev) this->prev->next = new_elem;
     new_elem->prev = this->prev;
@@ -58,7 +57,6 @@ link* link::insert(link* new_elem) { // this_prev -- new_elem -- this
 }
 link* link::add(link* new_elem) { // this -- new_elem -- this_nxt
     if (!new_elem) return this;
-    if (!this) return new_elem;
     new_elem->prev = this;
     if (this->next) this->next->prev = new_elem;
     new_elem->next = this->next;
