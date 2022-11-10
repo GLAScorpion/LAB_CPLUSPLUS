@@ -1,3 +1,5 @@
+#ifndef link_hpp
+#define link_hpp
 #include <iostream>
 #include "link.h"
 using namespace lnk;
@@ -100,3 +102,4 @@ link* link::advance(int n){
     }
     return elem;
 }
+#endif

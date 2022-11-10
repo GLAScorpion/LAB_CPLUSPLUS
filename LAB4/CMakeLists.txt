@@ -12,7 +12,6 @@ main3.cpp
 )
 add_executable(testlink
 main.cpp
-link.cpp
 )
 add_executable(testlinklist
 testlinklist.cpp

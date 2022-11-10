@@ -1,3 +1,5 @@
+#ifndef link_h
+#define link_h
 #include <iostream>
 #include <string.h>
 class link{
@@ -31,3 +33,5 @@ namespace lnk{
     link* push_back(link* lst, link* elem);
     link* push_front(link* lst, link* elem);
 }
+#include "link.hpp"
+#endif
