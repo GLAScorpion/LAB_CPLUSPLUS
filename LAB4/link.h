@@ -5,6 +5,7 @@
 template<typename T>
 class link{
     public:
+        T value;
         //COSTRUTTORI
         explicit link(const T& val, link* previous = nullptr, link* successive =nullptr)
         : value{val}, prev{previous}, next{successive} {}
@@ -17,9 +18,11 @@ class link{
         link* search(T val);
         link* advance(int n);
         link* extract();     //"erase" come visto a lezione, nessuna gestione della memoria
-        T value;
-	bool hasnext(){return next;}
-	bool hasprev(){return prev;}
+        //FUNZIONI NON RICHIESTE DALLA CONSEGNA
+        link* clone_lst();   //ritorna un puntatore a un lista diversa, ma con gli stessi contenuti da this a back()
+        bool hasnext(){return next;}
+        bool hasprev(){return prev;}
+        void join(link* lst);   //collega due link, in particolare lst deve aver uno dei due puntatori a nullptr
     private:
         link* prev;
         link* next;

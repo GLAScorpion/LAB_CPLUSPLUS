@@ -3,7 +3,7 @@
 #include <iostream>
 #include "link.h"
 #include "linklist.h"
-using std::cout;
+#include <vector>
 template<typename T>
 list<T>::list(std::initializer_list<T> lst){
     size = lst.size();
@@ -29,6 +29,7 @@ T list<T>::remove(int index){
     link<T>* elem = navigate(index);
     if(elem == front) return pop_front();
     if(elem == back) return pop_back();
+    size--;
     return lnk::erase(elem);
 }
 template<typename T>
@@ -38,8 +39,7 @@ void list<T>::push_back(T obj){
         back = front = new link<T>(obj);
         return;
     }
-    this->ins_after(T,-1);
-   // back = lnk::push_back(back, new link<T>(obj));
+    back = back->add(new link<T>{obj});
 }
 template<typename T>
 void list<T>::push_front(T obj){
@@ -48,9 +48,7 @@ void list<T>::push_front(T obj){
         back = front = new link<T>(obj);
         return;
     }
-    this->ins_before(T,0);
-    //front = lnk::push_front(front, new link<T>(obj));
-    
+    front = front->insert(new link<T>{obj});
 }
 template<typename T>
 T list<T>::pop_back(){
@@ -60,7 +58,10 @@ T list<T>::pop_back(){
     elem = elem->extract();
     T obj = elem->value;
     size--;
-    if(!back) return obj;
+    if(!back){
+        back = nullptr;
+        return obj;
+    }
     if(!back->hasprev())front=back;
     delete elem;
     return obj;
@@ -73,7 +74,10 @@ T list<T>::pop_front(){
     elem = elem->extract();
     T obj = elem->value;
     size--;
-    if(!front)return obj;
+    if(!front){
+        back = nullptr;
+        return obj;
+    }
     if(!front->hasnext())back = front;
     delete elem;
     return obj;
@@ -81,11 +85,13 @@ T list<T>::pop_front(){
 template<typename T>
 void list<T>::ins_before(T obj, int index){
     link<T>* elem  = navigate(index)->insert(new link<T>{obj});
+    if(!elem->hasprev())front = elem;
     size++;
 }
 template<typename T>
 void list<T>::ins_after(T obj, int index){
     link<T>* elem  = navigate(index)->add(new link<T>{obj});
+    if(!elem->hasnext())back = elem;
     size++;
 }
 template<typename T>
@@ -106,7 +112,28 @@ int list<T>::find(T obj){
             return counter;
         }
         elem = elem->advance(1);
+        counter++;
     }
     return -1;
+}
+template<typename T>
+void list<T>::list_ins(list<T>& lst, int index){//inserisce una lista dopo l'index, ad indice -1 la inserisce in testa
+    link<T>* indexed = nullptr;
+    if(index!=-1)indexed = navigate(index);
+    size += lst.get_size();
+    link<T>* front_clone_lst = lst.front->clone_lst();
+    link<T>* back_clone_lst = front_clone_lst->back();
+    if(index==-1){
+        front->join(back_clone_lst);
+        front = front_clone_lst;
+        return;
+    }
+    if(indexed == back){
+        back->join(front_clone_lst);
+        back = back_clone_lst;
+        return;
+    }
+    navigate(index+1)->join(back_clone_lst);
+    indexed->join(front_clone_lst);
 }
 #endif

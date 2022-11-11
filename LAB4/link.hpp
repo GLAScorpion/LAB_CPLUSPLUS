@@ -28,17 +28,52 @@ T lnk::erase(link<T>* elem){
 }
 template <typename T>
 std::string lnk::print_all(link<T>* lst){
+    std::string ss;
     if(!lst) return "{ }";
     std::string s = "{ ";
-    link<T>* elem = lst->front();
+    link<T>* elem = lst;
     while(elem){
         s += "[" + elem->value + "] ";
+        //std::cout<<elem->value<<std::endl;
+        //std::cin>>ss;
         elem = elem->advance(1);
     }
     s+= "}";
     return s;
 }
+template<typename T>
+link<T>* link<T>::clone_lst(){
+    link<T>* elem = this;
+    link<T>* out = new link<T>(value);
+    elem=elem->advance(1);
+    link<T>* front = out;
+    while(elem){
+        out->next = new link<T>(elem->value,out,nullptr);
+        out = out->next;
+        elem=elem->advance(1);
+    }
+    std::cout<<lnk::print_all(front)<<std::endl;
+    return front;
+}
 //MEMBER FUNCTIONS
+template<typename T>
+void link<T>::join(link<T>* lst){
+    /*
+    if(!((lst->prev) xor (lst->next))){
+        throw std::invalid_argument("Invalid link. Front or back needed");
+    }
+    */
+    if(lst->next){
+        next = lst;
+        lst->prev = this;
+        return;
+    }
+    if(lst->prev){
+        prev = lst;
+        lst->next = this;
+        return;
+    }
+}
 template <typename T>
 link<T>* link<T>::search(T val){
     link<T>* elem = this;
@@ -72,7 +107,7 @@ link<T>* link<T>::add(link<T>* new_elem) { // this -- new_elem -- this_nxt
     return new_elem;
 }
 template <typename T>
-link<T>* link<T>::back(){ //trova il primo elemento, next == nullptr
+link<T>* link<T>::back(){ //trova l'ultimo elemento, next == nullptr
     link<T>* elem = this; 
     while(elem->next){
         elem = elem->next;
@@ -80,7 +115,7 @@ link<T>* link<T>::back(){ //trova il primo elemento, next == nullptr
     return elem;
 } 
 template <typename T>
-link<T>* link<T>::front(){    //trova l'ultimo elemento, prev == nullptr
+link<T>* link<T>::front(){    //trova il primo elemento, prev == nullptr
     link<T>* elem = this;
     while(elem->prev){
         elem = elem->prev;
