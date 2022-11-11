@@ -18,6 +18,8 @@ class link{
         link* advance(int n);
         link* extract();     //"erase" come visto a lezione, nessuna gestione della memoria
         T value;
+	bool hasnext(){return next;}
+	bool hasprev(){return prev;}
     private:
         link* prev;
         link* next;

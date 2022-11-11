@@ -32,12 +32,12 @@ T list<T>::remove(int index){
 }
 template<typename T>
 void list<T>::push_back(T obj){
-    back = lnk::push_back(back, new link(obj));
+    back = lnk::push_back(back, new link<T>(obj));
     size++;
 }
 template<typename T>
 void list<T>::push_front(T obj){
-    front = lnk::push_front(front, new link(obj));
+    front = lnk::push_front(front, new link<T>(obj));
     size++;
 }
 template<typename T>
@@ -47,7 +47,7 @@ T list<T>::pop_back(){
     T obj = elem->value;
     delete elem;
     size--;
-    if(!back->prev)front=back;
+    if(!back->hasprev())front=back;
     return obj;
 }
 template<typename T>
@@ -57,7 +57,7 @@ T list<T>::pop_front(){
     T obj = elem->value;
     delete elem;
     size--;
-    if(!front->next)back=front;
+    if(!front->hasnext())back=front;
     return obj;
 }
 template<typename T>
