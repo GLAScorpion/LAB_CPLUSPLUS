@@ -16,7 +16,8 @@ list<T>::list(std::initializer_list<T> lst){
     back = elem;
 }
 template<typename T>
-link<T>* list<T>::navigate(int index){  //con indici positivi parte da front, con indici negativi da back
+link<T>* list<T>::navigate(int index){ //con indici positivi parte da front, con indici negativi da back
+    if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     if((index == 0)or(index==-size)) return front;
     if((index == size -1)or(index==-1)) return back;
     if(abs(index)>=size) throw std::invalid_argument("List out of bounds");
@@ -32,44 +33,59 @@ T list<T>::remove(int index){
 }
 template<typename T>
 void list<T>::push_back(T obj){
-    back = lnk::push_back(back, new link<T>(obj));
     size++;
+    if(!back){
+        back = front = new link<T>(obj);
+        return;
+    }
+    this->ins_after(T,-1);
+   // back = lnk::push_back(back, new link<T>(obj));
 }
 template<typename T>
 void list<T>::push_front(T obj){
-    front = lnk::push_front(front, new link<T>(obj));
     size++;
+    if(!front){
+        back = front = new link<T>(obj);
+        return;
+    }
+    this->ins_before(T,0);
+    //front = lnk::push_front(front, new link<T>(obj));
+    
 }
 template<typename T>
 T list<T>::pop_back(){
+    if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
+    link<T>* elem = back;
     back = back->advance(-1);
-    link<T>* elem = lnk::pop_back(back);
+    elem = elem->extract();
     T obj = elem->value;
-    delete elem;
     size--;
+    if(!back) return obj;
     if(!back->hasprev())front=back;
+    delete elem;
     return obj;
 }
 template<typename T>
 T list<T>::pop_front(){
+    if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
+    link<T>* elem = front;
     front = front->advance(1);
-    link<T>* elem = lnk::pop_front(front);
+    elem = elem->extract();
     T obj = elem->value;
-    delete elem;
     size--;
-    if(!front->hasnext())back=front;
+    if(!front)return obj;
+    if(!front->hasnext())back = front;
+    delete elem;
     return obj;
 }
 template<typename T>
 void list<T>::ins_before(T obj, int index){
     link<T>* elem  = navigate(index)->insert(new link<T>{obj});
-    if(!elem->prev)front = elem;
     size++;
 }
 template<typename T>
 void list<T>::ins_after(T obj, int index){
-    link<T>* elem  = navigate(index)->insert(new link<T>{obj});
-    if(!elem->next)back = elem;
+    link<T>* elem  = navigate(index)->add(new link<T>{obj});
     size++;
 }
 template<typename T>
@@ -82,6 +98,7 @@ T& list<T>::operator[](int n){
 }
 template<typename T>
 int list<T>::find(T obj){
+    if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     link<T>* elem = front;
     int counter = 0;
     while(elem){

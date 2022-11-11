@@ -17,4 +17,8 @@ int main(){
     l.remove(1);
     cout<<l.print()<<endl;
     l.remove(0);
+    cout<<l.print()<<endl;
+    l.push_back("str4");
+    l.push_front("str5");
+    cout<<l.print()<<endl;
 }

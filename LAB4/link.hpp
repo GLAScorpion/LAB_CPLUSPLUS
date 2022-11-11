@@ -28,6 +28,7 @@ T lnk::erase(link<T>* elem){
 }
 template <typename T>
 std::string lnk::print_all(link<T>* lst){
+    if(!lst) return "{ }";
     std::string s = "{ ";
     link<T>* elem = lst->front();
     while(elem){
