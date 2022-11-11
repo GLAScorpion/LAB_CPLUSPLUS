@@ -47,6 +47,7 @@ T list<T>::pop_back(){
     T obj = elem->value;
     delete elem;
     size--;
+    if(!back->prev)front=back;
     return obj;
 }
 template<typename T>
@@ -56,6 +57,7 @@ T list<T>::pop_front(){
     T obj = elem->value;
     delete elem;
     size--;
+    if(!front->next)back=front;
     return obj;
 }
 template<typename T>
