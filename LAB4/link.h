@@ -11,11 +11,13 @@ class link{
         : value{val}, prev{previous}, next{successive} {}
         ~link(){ if(prev)prev->next = nullptr;delete next; }
         //MEMBER FUNCTIONS
+        link* search(T val);
+        // this_prev -- new_elem -- this
         link* insert(link* new_elem);
+        // this -- new_elem -- this_nxt
         link* add(link* new_elem);
         link* back(); //trova l'ultimo elemento, next == nullptr
         link* front(); //trova il primo elemento, prev == nullptr
-        link* search(T val);
         link* advance(int n);
         link* extract();     //"erase" come visto a lezione, nessuna gestione della memoria
         //FUNZIONI NON RICHIESTE DALLA CONSEGNA

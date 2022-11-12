@@ -16,6 +16,37 @@ list<T>::list(std::initializer_list<T> lst){
     back = elem;
 }
 template<typename T>
+list<T>::list(const list<T>& lst)//costruttore di copia
+:size{lst.size},front{lst.front->clone_lst()},back{front->back()}{}
+template<typename T>
+list<T>::list(list<T>&& lst)
+:size{lst.size},front{lst.front},back{lst.back}
+{//costruttore di spostamento
+    lst.front = nullptr;
+    lst.back = nullptr;
+    lst.size = 0;
+}
+template<typename T>
+list<T>& list<T>::operator=(const list<T>& lst){ //assegnamento per copia
+    link<T>* new_lst = lst.front->clone_lst();
+    delete front;
+    size = lst.size;
+    front = new_lst;
+    back = front->back();
+    return *this;
+}
+template<typename T>
+list<T>& list<T>::operator=(list<T>&& lst){   //assegnamento per spostamento
+    delete front;
+    front = lst.front;
+    back = lst.back;
+    size = lst.size;
+    lst.front = nullptr;
+    lst.back = nullptr;
+    lst.size = 0;
+    return *this;
+}
+template<typename T>
 link<T>* list<T>::navigate(int index){ //con indici positivi parte da front, con indici negativi da back
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     if((index == 0)or(index==-size)) return front;
@@ -95,15 +126,19 @@ void list<T>::ins_after(T obj, int index){
     size++;
 }
 template<typename T>
-T list<T>::print(){
+T list<T>::print() const{
     return lnk::print_all(front);
+}
+template<typename T>
+T list<T>::operator[](int n) const{
+    return navigate(n)->value;
 }
 template<typename T>
 T& list<T>::operator[](int n){
     return navigate(n)->value;
 }
 template<typename T>
-int list<T>::find(T obj){
+int list<T>::find(T obj) const{
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     link<T>* elem = front;
     int counter = 0;
@@ -135,5 +170,20 @@ void list<T>::list_ins(list<T>& lst, int index){//inserisce una lista dopo l'ind
     }
     navigate(index+1)->join(back_clone_lst);
     indexed->join(front_clone_lst);
+}
+//HELPER FUNCTION
+template<typename T>
+list<T> operator+(list<T> lst1,list<T> lst2){
+    list<T> tmp = lst1;
+    tmp.list_ins(lst2,tmp.get_size()-1);
+    return tmp;
+}
+template<typename T>
+list<T> to_list(std::vector<T> lst1){
+    list<T> tmp;
+    for(int i=0;i<lst1.size();i++){
+        tmp.push_back(lst1[i]);
+    }
+    return tmp;
 }
 #endif

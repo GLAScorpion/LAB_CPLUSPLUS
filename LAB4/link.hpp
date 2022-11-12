@@ -34,8 +34,6 @@ std::string lnk::print_all(link<T>* lst){
     link<T>* elem = lst;
     while(elem){
         s += "[" + elem->value + "] ";
-        //std::cout<<elem->value<<std::endl;
-        //std::cin>>ss;
         elem = elem->advance(1);
     }
     s+= "}";
@@ -52,7 +50,6 @@ link<T>* link<T>::clone_lst(){
         out = out->next;
         elem=elem->advance(1);
     }
-    std::cout<<lnk::print_all(front)<<std::endl;
     return front;
 }
 //MEMBER FUNCTIONS
@@ -89,7 +86,7 @@ link<T>* link<T>::search(T val){
     return nullptr;
 }
 template <typename T>
-link<T>* link<T>::insert(link<T>* new_elem) { // this_prev -- new_elem -- this
+link<T>* link<T>::insert(link<T>* new_elem) { 
     if (!new_elem) return this;
     new_elem->next = this;
     if (this->prev) this->prev->next = new_elem;
@@ -98,7 +95,7 @@ link<T>* link<T>::insert(link<T>* new_elem) { // this_prev -- new_elem -- this
     return new_elem;
 }
 template <typename T>
-link<T>* link<T>::add(link<T>* new_elem) { // this -- new_elem -- this_nxt
+link<T>* link<T>::add(link<T>* new_elem) { 
     if (!new_elem) return this;
     new_elem->prev = this;
     if (this->next) this->next->prev = new_elem;

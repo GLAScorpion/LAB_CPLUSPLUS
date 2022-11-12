@@ -17,12 +17,17 @@ class list{
         T pop_front();
         void ins_before(T obj, int index);
         void ins_after(T obj, int index);
-        T print();
-        T& operator[](int obj);
-        int find(T obj);
+        T print() const;
+        T operator[](int n) const;
+        T& operator[](int n);
+        int find(T obj) const;
         T remove(int index);
-        int get_size(){return size;}
+        int get_size() const{return size;}
         void list_ins(list<T>& lst, int index);
+        list(const list& lst);//costruttore di copia
+        list(list&& lst);//costruttore di spostamento
+        list<T>& operator=(const list<T>& lst); //assegnamento per copia
+        list<T>& operator=(list<T>&& lst); //assegnamento per spostamento
     private:
         link<T>* navigate(int index);
         int size;
@@ -30,12 +35,10 @@ class list{
         link<T>* back;
 };
 template<typename T>
-list<T>& operator+(list<T> lst1,list<T> lst2);
+list<T> operator+(list<T> lst1,list<T> lst2);
 template<typename T>
-list<T>& operator-(list<T> lst1,list<T> lst2);
+list<T> operator-(list<T> lst1,list<T> lst2);
 template<typename T>
-list<T>& operator+(list<T> lst1,std::vector<T> lst2);
-template<typename T>
-list<T>& operator-(list<T> lst1,std::vector<T> lst2);
+list<T> to_list(std::vector<T> lst1);
 #include "linklist.hpp"
 #endif
