@@ -16,15 +16,21 @@ class link{
         link* insert(link* new_elem);
         // this -- new_elem -- this_nxt
         link* add(link* new_elem);
-        link* back(); //trova l'ultimo elemento, next == nullptr
-        link* front(); //trova il primo elemento, prev == nullptr
+        //trova l'ultimo elemento, next == nullptr
+        link* back(); 
+        //trova il primo elemento, prev == nullptr
+        link* front(); 
         link* advance(int n);
         link* extract();     //"erase" come visto a lezione, nessuna gestione della memoria
         //FUNZIONI NON RICHIESTE DALLA CONSEGNA
-        link* clone_lst();   //ritorna un puntatore a un lista diversa, ma con gli stessi contenuti da this a back()
+        //ritorna un puntatore a un lista diversa, ma con gli stessi contenuti da this a back()
+        link* clone_lst();   
         bool hasnext(){return next;}
         bool hasprev(){return prev;}
-        void join(link* lst);   //collega due link, in particolare lst deve aver uno dei due puntatori a nullptr
+        //collega due link, in particolare lst deve aver uno dei due puntatori a nullptr
+        void join(link* lst);   
+        //scollega this da next, e ritorna next
+        link* unlink();
     private:
         link* prev;
         link* next;

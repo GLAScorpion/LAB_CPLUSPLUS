@@ -48,6 +48,16 @@ int main(){
     vector<string> vec = {"Mele", "Pere","Pomodori"};
     l5 = l2 + to_list(vec);
     cout<<l5.print()<<l5.get_size()<<endl;
+    l3 = l4.extractlist(3,1);
+    cout<<l3.print()<<" "<<l3.get_size()<<endl;
+    cout<<l4.print()<<" "<<l4.get_size()<<endl;
+    l4.list_ins(l3,3);
+    cout<<l4.print()<<" "<<l4.get_size()<<endl;
+    l3 = l4.extractlist(-1,1);
+    cout<<l3.print()<<" "<<l3.get_size()<<endl;
+    cout<<l4.print()<<" "<<l4.get_size()<<endl;
+    l4.list_ins(l3,-1);
+    cout<<l4.print()<<" "<<l4.get_size()<<endl;
 }
 list<string> fill(int n){
     string s = "fill";

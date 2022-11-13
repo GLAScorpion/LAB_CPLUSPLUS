@@ -47,13 +47,16 @@ list<T>& list<T>::operator=(list<T>&& lst){   //assegnamento per spostamento
     return *this;
 }
 template<typename T>
-link<T>* list<T>::navigate(int index){ //con indici positivi parte da front, con indici negativi da back
+link<T>* list<T>::navigate(int index){
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
-    if((index == 0)or(index==-size)) return front;
-    if((index == size -1)or(index==-1)) return back;
-    if(abs(index)>=size) throw std::invalid_argument("List out of bounds");
-    if(index>0) return front->advance(index);
-    return back->advance(index+1);
+    if(index<0) throw std::invalid_argument("Negative index not allowed");
+    if(index == 0) return front;
+    if(index == size -1) return back;
+    if(index>=size) throw std::invalid_argument("List out of bounds");
+    if(index < size/2){
+        return front->advance(index);
+    }
+    return back->advance(-(size-1-index));
 }
 template<typename T>
 T list<T>::remove(int index){
@@ -152,26 +155,65 @@ int list<T>::find(T obj) const{
     return -1;
 }
 template<typename T>
-void list<T>::list_ins(list<T>& lst, int index){//inserisce una lista dopo l'index, ad indice -1 la inserisce in testa
+void list<T>::list_ins(list<T>& lst, int index){
     link<T>* indexed = nullptr;
     if(index!=-1)indexed = navigate(index);
-    size += lst.get_size();
     link<T>* front_clone_lst = lst.front->clone_lst();
     link<T>* back_clone_lst = front_clone_lst->back();
     if(index==-1){
-        front->join(back_clone_lst);
+        back_clone_lst->join(front);
         front = front_clone_lst;
+        size += lst.get_size();
         return;
     }
     if(indexed == back){
         back->join(front_clone_lst);
         back = back_clone_lst;
+        size += lst.get_size();
         return;
     }
     navigate(index+1)->join(back_clone_lst);
     indexed->join(front_clone_lst);
+    size += lst.get_size();
+}
+template<typename T>
+list<T> list<T>::extractlist(int first, int num){
+    if((num<0)or(first<-1))throw std::invalid_argument("Negative index not allowed");
+    if(num == 0) return list<T>{remove(first)}; 
+    link<T>* num_elem = navigate(first + num);
+    link<T>* first_elem_prev = nullptr;
+    if(first > 0)first_elem_prev = navigate(first-1); 
+    link<T>* num_elem_next = num_elem->unlink();
+    link<T>* first_elem = front;
+    if(first_elem_prev)first_elem = first_elem_prev->unlink();
+    size = size - num - 1;
+    if(first_elem_prev){
+        if(num_elem_next){
+            first_elem_prev->join(num_elem_next);
+        }else{
+            back = first_elem_prev;
+        }
+    }else{
+        if(num_elem_next){
+            front = num_elem_next;
+        }else{
+            front = nullptr;
+            back = nullptr;
+        }
+    }
+    list<T> lst;
+    lst.size = num+1;
+    lst.front = first_elem;
+    lst.back = num_elem;
+    return lst;
 }
 //HELPER FUNCTION
+template<typename T>
+list<T> sublist(list<T> source,int first, int num){
+    list<T> res = source.extractlist(first,num);
+    source.list_ins(res,num);
+    return res;
+}
 template<typename T>
 list<T> operator+(list<T> lst1,list<T> lst2){
     list<T> tmp = lst1;

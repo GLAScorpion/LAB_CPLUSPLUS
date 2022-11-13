@@ -71,6 +71,14 @@ void link<T>::join(link<T>* lst){
         return;
     }
 }
+template<typename T>
+link<T>* link<T>::unlink(){
+    if(!next) return nullptr;
+    link<T>* nxt = next;
+    next = nullptr;
+    nxt->prev = nullptr;
+    return nxt;
+}
 template <typename T>
 link<T>* link<T>::search(T val){
     link<T>* elem = this;

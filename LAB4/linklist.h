@@ -23,17 +23,23 @@ class list{
         int find(T obj) const;
         T remove(int index);
         int get_size() const{return size;}
+        //inserisce una lista dopo l'index, ad indice -1 la inserisce in testa
         void list_ins(list<T>& lst, int index);
         list(const list& lst);//costruttore di copia
         list(list&& lst);//costruttore di spostamento
         list<T>& operator=(const list<T>& lst); //assegnamento per copia
         list<T>& operator=(list<T>&& lst); //assegnamento per spostamento
+        // taglia this a partire da this[first] per num elementi e ritorna il pezzo tagliato
+        list<T> extractlist(int first, int num);
     private:
         link<T>* navigate(int index);
         int size;
         link<T>* front;
         link<T>* back;
 };
+// ritorna una copia del segmento che inizia con this[first] e prosegue per num elementi
+template<typename T>
+list<T> sublist(list<T> source,int first, int num);
 template<typename T>
 list<T> operator+(list<T> lst1,list<T> lst2);
 template<typename T>
