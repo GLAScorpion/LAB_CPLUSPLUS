@@ -6,7 +6,7 @@
 #include <vector>
 template<typename T>
 list<T>::list(std::initializer_list<T> lst){
-    size = lst.size();
+    dim = lst.size();
     const T* obj = lst.begin();
     link<T>* elem = new link<T>(obj[0]);
     front = elem;
@@ -17,20 +17,20 @@ list<T>::list(std::initializer_list<T> lst){
 }
 template<typename T>
 list<T>::list(const list<T>& lst)//costruttore di copia
-:size{lst.size},front{lst.front->clone_lst()},back{front->back()}{}
+:dim{lst.dim},front{lst.front->clone_lst()},back{front->back()}{}
 template<typename T>
 list<T>::list(list<T>&& lst)
-:size{lst.size},front{lst.front},back{lst.back}
+:dim{lst.dim},front{lst.front},back{lst.back}
 {//costruttore di spostamento
     lst.front = nullptr;
     lst.back = nullptr;
-    lst.size = 0;
+    lst.dim = 0;
 }
 template<typename T>
 list<T>& list<T>::operator=(const list<T>& lst){ //assegnamento per copia
     link<T>* new_lst = lst.front->clone_lst();
     delete front;
-    size = lst.size;
+    dim = lst.dim;
     front = new_lst;
     back = front->back();
     return *this;
@@ -40,10 +40,10 @@ list<T>& list<T>::operator=(list<T>&& lst){   //assegnamento per spostamento
     delete front;
     front = lst.front;
     back = lst.back;
-    size = lst.size;
+    dim = lst.dim;
     lst.front = nullptr;
     lst.back = nullptr;
-    lst.size = 0;
+    lst.dim = 0;
     return *this;
 }
 template<typename T>
@@ -51,24 +51,24 @@ link<T>* list<T>::navigate(int index){
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     if(index<0) throw std::invalid_argument("Negative index not allowed");
     if(index == 0) return front;
-    if(index == size -1) return back;
-    if(index>=size) throw std::invalid_argument("List out of bounds");
-    if(index < size/2){
+    if(index == dim -1) return back;
+    if(index>=dim) throw std::invalid_argument("List out of bounds");
+    if(index <= dim/2){
         return front->advance(index);
     }
-    return back->advance(-(size-1-index));
+    return back->advance(-(dim-1-index));
 }
 template<typename T>
 T list<T>::remove(int index){
     link<T>* elem = navigate(index);
     if(elem == front) return pop_front();
     if(elem == back) return pop_back();
-    size--;
+    dim--;
     return lnk::erase(elem);
 }
 template<typename T>
 void list<T>::push_back(T obj){
-    size++;
+    dim++;
     if(!back){
         back = front = new link<T>(obj);
         return;
@@ -77,7 +77,7 @@ void list<T>::push_back(T obj){
 }
 template<typename T>
 void list<T>::push_front(T obj){
-    size++;
+    dim++;
     if(!front){
         back = front = new link<T>(obj);
         return;
@@ -91,7 +91,7 @@ T list<T>::pop_back(){
     back = back->advance(-1);
     elem = elem->extract();
     T obj = elem->value;
-    size--;
+    dim--;
     if(!back){
         back = nullptr;
         return obj;
@@ -107,7 +107,7 @@ T list<T>::pop_front(){
     front = front->advance(1);
     elem = elem->extract();
     T obj = elem->value;
-    size--;
+    dim--;
     if(!front){
         back = nullptr;
         return obj;
@@ -120,13 +120,13 @@ template<typename T>
 void list<T>::ins_before(T obj, int index){
     link<T>* elem  = navigate(index)->insert(new link<T>{obj});
     if(!elem->hasprev())front = elem;
-    size++;
+    dim++;
 }
 template<typename T>
 void list<T>::ins_after(T obj, int index){
     link<T>* elem  = navigate(index)->add(new link<T>{obj});
     if(!elem->hasnext())back = elem;
-    size++;
+    dim++;
 }
 template<typename T>
 T list<T>::print() const{
@@ -163,18 +163,18 @@ void list<T>::list_ins(list<T>& lst, int index){
     if(index==-1){
         back_clone_lst->join(front);
         front = front_clone_lst;
-        size += lst.get_size();
+        dim += lst.dim;
         return;
     }
     if(indexed == back){
         back->join(front_clone_lst);
         back = back_clone_lst;
-        size += lst.get_size();
+        dim += lst.dim;
         return;
     }
     navigate(index+1)->join(back_clone_lst);
     indexed->join(front_clone_lst);
-    size += lst.get_size();
+    dim += lst.dim;
 }
 template<typename T>
 list<T> list<T>::extractlist(int first, int num){
@@ -186,7 +186,7 @@ list<T> list<T>::extractlist(int first, int num){
     link<T>* num_elem_next = num_elem->unlink();
     link<T>* first_elem = front;
     if(first_elem_prev)first_elem = first_elem_prev->unlink();
-    size = size - num - 1;
+    dim = dim - num - 1;
     if(first_elem_prev){
         if(num_elem_next){
             first_elem_prev->join(num_elem_next);
@@ -202,7 +202,7 @@ list<T> list<T>::extractlist(int first, int num){
         }
     }
     list<T> lst;
-    lst.size = num+1;
+    lst.dim = num+1;
     lst.front = first_elem;
     lst.back = num_elem;
     return lst;
@@ -211,21 +211,29 @@ list<T> list<T>::extractlist(int first, int num){
 template<typename T>
 list<T> sublist(list<T> source,int first, int num){
     list<T> res = source.extractlist(first,num);
-    source.list_ins(res,num);
+    source.list_ins(res,num-1);
     return res;
 }
 template<typename T>
 list<T> operator+(list<T> lst1,list<T> lst2){
     list<T> tmp = lst1;
-    tmp.list_ins(lst2,tmp.get_size()-1);
+    tmp.list_ins(lst2,tmp.size()-1);
     return tmp;
 }
 template<typename T>
-list<T> to_list(std::vector<T> lst1){
+list<T> to_list(std::vector<T> lst){
     list<T> tmp;
-    for(int i=0;i<lst1.size();i++){
-        tmp.push_back(lst1[i]);
+    for(int i=0;i<lst.size();i++){
+        tmp.push_back(lst[i]);
     }
     return tmp;
+}
+template<typename T>
+std::vector<T> to_vector(list<T> lst){
+    std::vector<T> vec;
+    for(int i=0; i<lst.size();i++){
+        vec.push_back(lst[i]);
+    }
+    return vec;
 }
 #endif

@@ -2,7 +2,7 @@
 class vector{
 public:
     explicit vector(int dim);
-    int get_size() const;
+    int size() const;
     double& operator[](int index);
     double operator[](int index) const;
     double safe_get(int index) const;
@@ -14,7 +14,7 @@ public:
     ~vector();
     vector(std::initializer_list<double> lst);
 private:
-    const int size;
+    const int dim;
     double* elem = nullptr;
    
 };

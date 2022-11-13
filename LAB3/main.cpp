@@ -4,7 +4,7 @@ using namespace std;
 vector fill(int num);
 int main(void){
     vector a (7);
-    cout << a.get_size() << endl;
+    cout << a.size() << endl;
     a[2] = 3.2;
     vector b = a;
     cout << a << " "<< b<<endl;

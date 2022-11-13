@@ -8,9 +8,10 @@ class list{
     public:
         //COSTRUTTORI
         ~list(){delete front;}
-        list(): size{0},front{nullptr},back{nullptr}{};
+        list(): dim{0},front{nullptr},back{nullptr}{};
         list(std::initializer_list<T> lst);
         //MEMBER FUNCTIONS
+        bool empty() {return dim==0;}
         void push_back(T obj);
         void push_front(T obj);
         T pop_back();
@@ -22,7 +23,7 @@ class list{
         T& operator[](int n);
         int find(T obj) const;
         T remove(int index);
-        int get_size() const{return size;}
+        int size() const{return dim;}
         //inserisce una lista dopo l'index, ad indice -1 la inserisce in testa
         void list_ins(list<T>& lst, int index);
         list(const list& lst);//costruttore di copia
@@ -33,7 +34,7 @@ class list{
         list<T> extractlist(int first, int num);
     private:
         link<T>* navigate(int index);
-        int size;
+        int dim;
         link<T>* front;
         link<T>* back;
 };
@@ -45,6 +46,8 @@ list<T> operator+(list<T> lst1,list<T> lst2);
 template<typename T>
 list<T> operator-(list<T> lst1,list<T> lst2);
 template<typename T>
-list<T> to_list(std::vector<T> lst1);
+list<T> to_list(std::vector<T> lst);
+template<typename T>
+std::vector<T> to_vector(list<T> lst);
 #include "linklist.hpp"
 #endif
