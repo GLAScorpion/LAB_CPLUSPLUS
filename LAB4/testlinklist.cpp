@@ -58,7 +58,7 @@ int main(){
     cout<<l4.print()<<" "<<l4.size()<<endl;
     l4.list_ins(l3,-1);
     cout<<l4.print()<<" "<<l4.size()<<endl;
-    l3 = sublist(l4,-1,1);
+    l3 = l4.sublist(-1,1);
     cout<<l3.print()<<" "<<l3.size()<<endl;
     cout<<l4.print()<<" "<<l4.size()<<endl;
     vector<string> vec2 = to_vector(l2);

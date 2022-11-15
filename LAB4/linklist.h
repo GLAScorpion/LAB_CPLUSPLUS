@@ -32,6 +32,7 @@ class list{
         list<T>& operator=(list<T>&& lst); //assegnamento per spostamento
         // taglia this a partire da this[first] per num elementi e ritorna il pezzo tagliato
         list<T> extractlist(int first, int num);
+        list<T> sublist(int first, int num) const;
     private:
         link<T>* navigate(int index);
         int dim;
@@ -40,11 +41,7 @@ class list{
 };
 // ritorna una copia del segmento che inizia con this[first] e prosegue per num elementi
 template<typename T>
-list<T> sublist(list<T> source,int first, int num);
-template<typename T>
 list<T> operator+(list<T> lst1,list<T> lst2);
-template<typename T>
-list<T> operator-(list<T> lst1,list<T> lst2);
 template<typename T>
 list<T> to_list(std::vector<T> lst);
 template<typename T>

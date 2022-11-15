@@ -209,10 +209,9 @@ list<T> list<T>::extractlist(int first, int num){
 }
 //HELPER FUNCTION
 template<typename T>
-list<T> sublist(list<T> source,int first, int num){
-    list<T> res = source.extractlist(first,num);
-    source.list_ins(res,num-1);
-    return res;
+list<T> list<T>::sublist(int first, int num) const{
+    list<T> tmp = *this;
+    return tmp.extractlist(first,num);
 }
 template<typename T>
 list<T> operator+(list<T> lst1,list<T> lst2){
