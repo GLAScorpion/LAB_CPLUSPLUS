@@ -66,6 +66,9 @@ int main(){
         cout<<vec2[i]<<" ";
     }
     cout<<endl;
+    cout<<sizeof(l4)<<endl;
+    cout<<sizeof(list<string>)<<endl;
+    cout<<sizeof(list<long long int>)<<endl;
 }
 list<string> fill(int n){
     string s = "fill";
