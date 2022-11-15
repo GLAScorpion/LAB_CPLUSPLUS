@@ -59,7 +59,7 @@ link<T>* list<T>::navigate(int index){
     return back->advance(-(dim-1-index));
 }
 template<typename T>
-T list<T>::remove(int index){
+const T list<T>::remove(int index){
     link<T>* elem = navigate(index);
     if(elem == front) return pop_front();
     if(elem == back) return pop_back();
@@ -67,7 +67,7 @@ T list<T>::remove(int index){
     return lnk::erase(elem);
 }
 template<typename T>
-void list<T>::push_back(T obj){
+void list<T>::push_back(const T& obj){
     dim++;
     if(!back){
         back = front = new link<T>(obj);
@@ -76,7 +76,7 @@ void list<T>::push_back(T obj){
     back = back->add(new link<T>{obj});
 }
 template<typename T>
-void list<T>::push_front(T obj){
+void list<T>::push_front(const T& obj){
     dim++;
     if(!front){
         back = front = new link<T>(obj);
@@ -85,7 +85,7 @@ void list<T>::push_front(T obj){
     front = front->insert(new link<T>{obj});
 }
 template<typename T>
-T list<T>::pop_back(){
+const T list<T>::pop_back(){
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     link<T>* elem = back;
     back = back->advance(-1);
@@ -101,7 +101,7 @@ T list<T>::pop_back(){
     return obj;
 }
 template<typename T>
-T list<T>::pop_front(){
+const T list<T>::pop_front(){
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     link<T>* elem = front;
     front = front->advance(1);
@@ -117,19 +117,19 @@ T list<T>::pop_front(){
     return obj;
 }
 template<typename T>
-void list<T>::ins_before(T obj, int index){
+void list<T>::ins_before(const T& obj, int index){
     link<T>* elem  = navigate(index)->insert(new link<T>{obj});
     if(!elem->hasprev())front = elem;
     dim++;
 }
 template<typename T>
-void list<T>::ins_after(T obj, int index){
+void list<T>::ins_after(const T& obj, int index){
     link<T>* elem  = navigate(index)->add(new link<T>{obj});
     if(!elem->hasnext())back = elem;
     dim++;
 }
 template<typename T>
-T list<T>::print() const{
+const std::string list<T>::print() const{
     return lnk::print_all(front);
 }
 template<typename T>
@@ -141,7 +141,7 @@ T& list<T>::operator[](int n){
     return navigate(n)->value;
 }
 template<typename T>
-int list<T>::find(T obj) const{
+int list<T>::find(const T& obj) const{
     if((front == back)and(front == nullptr)) throw std::invalid_argument("Empty list"); 
     link<T>* elem = front;
     int counter = 0;

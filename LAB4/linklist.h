@@ -12,17 +12,17 @@ class list{
         list(std::initializer_list<T> lst);
         //MEMBER FUNCTIONS
         bool empty() {return dim==0;}
-        void push_back(T obj);
-        void push_front(T obj);
-        T pop_back();
-        T pop_front();
-        void ins_before(T obj, int index);
-        void ins_after(T obj, int index);
-        T print() const;
+        void push_back(const T& obj);
+        void push_front(const T& obj);
+        const T pop_back();
+        const T pop_front();
+        void ins_before(const T& obj, int index);
+        void ins_after(const T& obj, int index);
+        const std::string print() const;
         T operator[](int n) const;
         T& operator[](int n);
-        int find(T obj) const;
-        T remove(int index);
+        int find(const T& obj) const;
+        const T remove(int index);
         int size() const{return dim;}
         //inserisce una lista dopo l'index, ad indice -1 la inserisce in testa
         void list_ins(list<T>& lst, int index);

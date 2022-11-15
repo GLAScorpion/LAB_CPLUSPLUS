@@ -11,7 +11,7 @@ class link{
         : value{val}, prev{previous}, next{successive} {}
         ~link(){ if(prev)prev->next = nullptr;delete next; }
         //MEMBER FUNCTIONS
-        link* search(T val);
+        link* search(const T& val);
         // this_prev -- new_elem -- this
         link* insert(link* new_elem);
         // this -- new_elem -- this_nxt
@@ -38,7 +38,7 @@ class link{
 //HELPER FUNCTIONS
 namespace lnk{
     template <typename T>
-    std::string print_all(link<T>* lst);
+    const std::string print_all(link<T>* lst);
     template <typename T>
     T erase(link<T>* elem); //ho reinterpretato erase come un'eliminazione con distruzione, ritorna solo il valore del link
     template <typename T>

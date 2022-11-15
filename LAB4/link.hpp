@@ -27,7 +27,7 @@ T lnk::erase(link<T>* elem){
     return tmp_val;
 }
 template <typename T>
-std::string lnk::print_all(link<T>* lst){
+const std::string lnk::print_all(link<T>* lst){
     if(!lst) return "{ }";
     std::string s = "{ ";
     link<T>* elem = lst;
@@ -79,7 +79,7 @@ link<T>* link<T>::unlink(){
     return nxt;
 }
 template <typename T>
-link<T>* link<T>::search(T val){
+link<T>* link<T>::search(const T& val){
     link<T>* elem = this;
     link<T>* old_elem = elem->next;
     do{
