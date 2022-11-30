@@ -6,7 +6,7 @@ class vector{
     public:
     //member functions
         int size() const{return elem_num;}
-        int capacity() const{return capacity;}
+        int capacity() const{return elem_size;}
         T& operator[](int index){return elem[index];}
         const T& operator[](int index) const{return elem[index];}
         T& at(int index);
@@ -25,7 +25,7 @@ class vector{
         ~vector(){delete[] elem;}
         vector(std::initializer_list<T> lst);
     private:
-        int capacity;
+        int elem_size;
         int elem_num; //numero di elementi 
         T* elem = nullptr;    
 };
