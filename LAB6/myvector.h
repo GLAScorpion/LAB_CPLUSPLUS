@@ -12,10 +12,12 @@ class vector{
         T& at(int index);
         const T& at(int index) const;
         void reserve(int num);
+        void push_back(T val);
+        T pop_back();
     //costruttori
         //costruttore di default
         vector();
-        explicit vector(int dim);
+        explicit vector(long unsigned int dim);
         //costruttore di copia
         vector(const vector& vec);
         //costruttore di spostamento
@@ -25,11 +27,11 @@ class vector{
         ~vector(){delete[] elem;}
         vector(std::initializer_list<T> lst);
     private:
-        int elem_size;
-        int elem_num; //numero di elementi 
+        long unsigned int elem_size; //memoria allocata
+        long unsigned int elem_num; //numero di elementi 
         T* elem = nullptr;    
 };
 template<typename T>
-std::ostream& operator<<(std::ostream& os, vector<T>& vec);
+std::ostream& operator<<(std::ostream& os,const vector<T>& vec);
 #include "myvector.hpp"
 #endif

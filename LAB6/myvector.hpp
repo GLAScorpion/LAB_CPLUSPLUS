@@ -3,7 +3,6 @@
 #include "myvector.h"
 #include <iostream>
 //member functions
-const int initial_size=10;
 template <typename T>
 T& vector<T>::at(int index){
     if(index <0 or index >= elem_num) throw std::invalid_argument("Array out of bounds");
@@ -23,17 +22,28 @@ void vector<T>::reserve(int num){
     elem = tmp;
     elem_size = num;
 }
+template <typename T>
+void vector<T>::push_back(T val){
+    if(++elem_num > elem_size) reserve(1.5 * elem_size);
+    elem[elem_num -1] = val;
+}
+template<typename T>
+T vector<T>::pop_back(){
+    if(elem_num == 0) throw std::invalid_argument("Empty vector");
+    return elem[--elem_num];
+}
 //costruttori
+const int initial_size = 10;
 template<typename T>
 vector<T>::vector()
 :elem_size{initial_size}, elem_num{0},elem{new T[elem_size]}
 {}
 
 template<typename T>
-vector<T>::vector(int dim)
+vector<T>::vector(long unsigned int dim)
 : elem_size{dim}, elem_num {dim}
 {
-    if(dim <= 0){
+    if(static_cast<int>(dim) <= 0){
             throw std::invalid_argument("Invalid vector dim");
     }
     if(elem_size<initial_size) elem_size = initial_size;
@@ -88,7 +98,7 @@ vector<T>& vector<T>::operator=(vector<T>&& vec){//assegnamento per spostamento
 } 
 //helper functions
 template <typename T>
-std::ostream& operator<<(std::ostream& os, vector<T>& vec){
+std::ostream& operator<<(std::ostream& os, const vector<T>& vec){
     os << "{ ";
     for(int i = 0; i < vec.size(); i++){
         os << vec[i] << " ";
