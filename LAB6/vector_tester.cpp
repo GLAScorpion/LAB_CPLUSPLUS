@@ -4,7 +4,7 @@ void fill(vector<int>& vec);
 void fill_to_cap(vector<int>& vec);
 using namespace std;
 int main(){
-    vector<int> a = vector<int>();
+    vector<int> a;
     cout << a.size() <<" "<<a.capacity()<<endl;
     vector<int> b = vector<int>(20);
     cout << b.size() <<" "<<b.capacity()<<endl;
