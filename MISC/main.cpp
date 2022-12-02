@@ -1,14 +1,16 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-bool cmp(int& x);
+template <typename T>
+bool cmp(T& x);
 using namespace std;
 int main(){
     vector<int> vec = { 2, 5 , 6, 8, 10, 20, 3 , 56, 77};
-    int pnt = *find_if(vec.begin(), vec.end(), cmp);
-    cout << pnt<<endl;
+    auto pnt = find_if(vec.begin(), vec.end(), cmp<int>);
+    cout << pnt[0] << endl;
 }
-bool cmp(int& x){
-    int* pnt = &x;
+template<typename T>
+bool cmp(T& x){
+    T* pnt = &x;
     return x > pnt[1];
 }

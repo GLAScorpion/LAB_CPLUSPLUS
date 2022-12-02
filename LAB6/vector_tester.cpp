@@ -6,7 +6,7 @@ using namespace std;
 int main(){
     vector<int> a;
     cout << a.size() <<" "<<a.capacity()<<endl;
-    vector<int> b = vector<int>(20);
+    vector<int> b (20);
     cout << b.size() <<" "<<b.capacity()<<endl;
     b.reserve(30);
     cout << b.size() <<" "<<b.capacity()<<endl;
@@ -15,7 +15,7 @@ int main(){
     fill(b);
     cout << b <<endl;
     cout<<"At(10): "<<b.at(10)<<endl;
-    vector<int> c = {1 , 3 ,7, 20 , 74};
+    vector<int> c = { 1 , 3 , 7 , 20 , 74 };
     cout << c <<c.size() <<" "<< c.capacity()<<endl;
     c.push_back(33);
     cout << c << c.size() <<" " << c.capacity()<<endl;
