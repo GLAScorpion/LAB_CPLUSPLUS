@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 2.8)
+set(CMAKE_CXX_STANDARD)
+project(LAB7)
+add_executable(map_tester.bin
+maze_tester.cpp
+maze.cpp
+)
+add_executable(maze.bin
+maze.cpp
+robot.cpp
+random_robot.cpp
+right_hand_rule_robot.cpp
+)
