@@ -2,34 +2,54 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-Maze::Maze(std::string file, int size)
+Maze::Maze(std::string file)
 {
     std::ifstream open_file(file);
     std::string line;
+    std::string txt;
+    std::getline(open_file, txt, '\0');
+    std::cout<<line<<std::endl;
     int x = 0;
     int y = 0;
-    while(!open_file.eof()){
+    bool loop = true;
+    while(loop){
+        if(open_file.eof()) loop = false;
         std::getline(open_file,line,'\n');
         std::vector<Cell> tmp;
-        for(x = 0; line.begin()+x != line.end(); x++){
-            if(line[x] == 'E'){
-                tmp.push_back(Cell::exit);
-            }else if(line[x] == '*'){
-                tmp.push_back(Cell::wall);
-            }else if(line[x] == 'S'){
+        std::cout<<static_cast<int>(line.size())<<std::endl;
+        for(x = 0; x < static_cast<int>(line.size()-1); x++){
+            tmp.push_back(Cell(line[x]));
+            if(line[x] == 'S'){
                 rob_x_ = x;
                 rob_y_ = y;
-                tmp.push_back(Cell::robot);
-            }else{
-                tmp.push_back(Cell::empty);
             }
-        }
-        std::cout << tmp << std::endl;
-        x = 0;
+        } 
+        map_.push_back(tmp);
         y++;
     }
-    dim_ = y;
     open_file.close();
+    dim_ = y-1;
+}
+Maze::Cell::Cell(const char& val){
+    if(val == 'E'){
+        exit_ = true;
+    }else if(val == '*'){
+        wall_ = true;
+    }else if(val == 'S'){
+        robot_ = true;
+    }else if(val != ' '){
+        throw std::invalid_argument("Invalid cell value");
+    }
+}
+std::ostream& operator<<(std::ostream& os, Maze::Cell val){
+    if(val.exit_){
+        return os<<"E";
+    }else if(val.robot_){
+        return os<<"R";
+    }else if(val.wall_){
+        return os<<"*";
+    }
+    return os <<" ";
 }
 std::ostream& operator<<(std::ostream& os, std::vector<Maze::Cell> vec){
     for(int i = 0; i < vec.size(); i++){
@@ -37,13 +57,9 @@ std::ostream& operator<<(std::ostream& os, std::vector<Maze::Cell> vec){
     }
     return os;
 }
-std::ostream& Maze::operator<<(std::ostream& os, Maze::Cell val){
-    if(val == empty){
-        return os<<" ";
-    }else if(val == Cell::exit){
-        return os<<"E";
-    }else if(val == Cell::robot){
-        return os<<"R";
+std::ostream& operator<<(std::ostream& os, Maze val){
+    for(int i = 0; i < val.dim_; i++){
+        os<<val.map_[i]<<std::endl;
     }
-    return os <<"*";
+    return os;
 }
