@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include <algorithm>
 Maze::Maze(const std::string& file){
     std::ifstream open_file(file);
     std::string txt;
@@ -49,11 +50,23 @@ Maze::Cell::Cell(const char& val){
 bool Maze::move(int num, int x_offset, int y_offset){
     coord pre_move_pos = robots_[num - 1];
     coord post_move_pos(pre_move_pos.x_ + x_offset,pre_move_pos.y_ + y_offset);
-    if(!is_empty(post_move_pos.x_,post_move_pos.y_)) return false;
+    post_move_pos.serial_ = pre_move_pos.serial_;
+    if(is_exit(post_move_pos.x_,post_move_pos.y_)){
+        map_[pre_move_pos.y_][pre_move_pos.x_] = Cell(' ');
+        robots_.erase(robots_.begin() + num - 1);
+        return true;
+    }
+    if(!is_empty(post_move_pos.x_,post_move_pos.y_) or post_move_pos.x_ >= size_ or post_move_pos.y_ >= size_) return false;
     map_[pre_move_pos.y_][pre_move_pos.x_] = Cell(' ');
     map_[post_move_pos.y_][post_move_pos.x_] = Cell('R');
     robots_[num - 1] = post_move_pos;
     return true;
+}
+int Maze::find_robot(int serial) const{
+    for(int i = 0; i < robots_.size(); i++){
+        if(robots_[i].serial_ == serial) return i + 1;
+    }
+    return -1;
 }
 void Maze::fill_map(){
     for(int i = 0; i < size_; i++){

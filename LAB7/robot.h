@@ -2,6 +2,7 @@
 #define robot_h
 #include <iostream>
 #include "maze.h"
+#include <random>
 /*
      -1   0   1
 -1    0   1   2
@@ -11,10 +12,15 @@
 */
 class Robot{
     public:
-        Robot(int num):num_{num}{}
+        Robot()
+        {
+            static std::random_device rand_serial;
+            static std::uniform_int_distribution<int> dist(0,INT32_MAX);
+            serial_ = dist(rand_serial);
+        }
         virtual bool move(Maze& maze) const = 0;
-        int num() const {return num_;}
+        int serial() const {return serial_;}
     private:
-        int num_;
+        int serial_;
 };
 #endif

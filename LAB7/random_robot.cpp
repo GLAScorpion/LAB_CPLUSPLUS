@@ -12,5 +12,6 @@ bool RandomRobot::move(Maze& maze) const{
         x = dist(rand_x);
         y = dist(rand_y);
     }
-    return maze.move(num(), x, y );
+    int pos = maze.find_robot(serial());
+    return maze.move(pos, x, y );
 }

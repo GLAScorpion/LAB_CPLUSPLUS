@@ -4,7 +4,7 @@
 #include "robot.h"
 class RandomRobot : public Robot{
     public:
-    explicit RandomRobot(int num):Robot(num){}
+    RandomRobot():Robot(){}
     bool move(Maze& maze) const override;
 };
 #endif // random_robot_h
