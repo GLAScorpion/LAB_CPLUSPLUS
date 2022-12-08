@@ -22,8 +22,10 @@ class vector{
         vector(const vector& vec);
         //costruttore di spostamento
         vector(vector&& vec);
-        vector& operator=(const vector& vec); //assegnamento per copia
-        vector& operator=(vector&& vec); //assegnamento per spostamento
+        //assegnamento per copia
+        vector& operator=(const vector& vec); 
+        //assegnamento per spostamento
+        vector& operator=(vector&& vec); 
         ~vector(){delete[] elem;}
         vector(std::initializer_list<T> lst);
     private:
