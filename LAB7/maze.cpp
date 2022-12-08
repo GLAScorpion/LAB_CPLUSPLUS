@@ -27,9 +27,6 @@ Maze::Maze(std::string file){
         map_.pop_back();
     }
     dim_ = map_.size();
-    for(int i = 0; i < dim_; i++){
-        while(map_[i].size() < dim_) map_[i].push_back(Cell(' '));
-    }
     fill_map();
 }
 Maze::Maze(std::string file, int dim)
