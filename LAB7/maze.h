@@ -5,6 +5,7 @@
 class Maze{
     public:
         explicit Maze(std::string file);
+        Maze(std::string file, int dim);
         bool is_exit(int x, int y){return map_[x][y].exit_;}
         bool is_wall(int x, int y){return map_[x][y].wall_;}
         bool is_robot(int x, int y){return map_[x][y].robot_;}
@@ -19,6 +20,7 @@ class Maze{
             bool exit_ = false;
             Cell(const char& val);
         };
+        void fill_map();
         friend std::ostream& operator<<(std::ostream& os, Cell val);
         friend std::ostream& operator<<(std::ostream& os, std::vector<Cell> vec);
         std::vector<std::vector<Cell>> map_;

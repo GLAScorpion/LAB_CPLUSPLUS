@@ -2,41 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-/*
-Maze::Maze(std::string file)
-{
-    std::ifstream open_file(file);
-    std::string line;
-    std::vector<Cell> tmp;
-    int x = 0;
-    int y = 0;
-    while(!open_file.eof()){
-        std::getline(open_file,line,'\n');
-        tmp = std::vector<Cell>();
-        for(x = 0; x < static_cast<int>(line.size()-1); x++){
-            tmp.push_back(Cell(line[x]));
-            if(line[x] == 'S'){
-                rob_x_ = x;
-                rob_y_ = y;
-            }
-        }
-        if(tmp.size()>0) map_.push_back(tmp);
-        y++;
-    }
-    std::getline(open_file,line,'\0');
-    tmp = std::vector<Cell>();
-    for(x = 0; x < static_cast<int>(line.size()-1); x++){
-        tmp.push_back(Cell(line[x]));
-        if(line[x] == 'S'){
-            rob_x_ = x;
-            rob_y_ = y;
-        }
-    }
-    if(tmp.size()>0) map_.push_back(tmp);
-    open_file.close();
-    dim_ = map_.size();
-}
-*/
 Maze::Maze(std::string file){
     std::ifstream open_file(file);
     std::string txt;
@@ -45,7 +10,7 @@ Maze::Maze(std::string file){
     std::vector<Cell> tmp;
     int x = 0;
     int y = 0;
-    for(int count = 0; count < txt.size(); count++){
+    for(int count = 0; count < txt.size(); count+=2){
         tmp = std::vector<Cell>();
         for(x = 0; isprint(txt[x + count]) and count < txt.size(); x++){
             tmp.push_back(Cell(txt[x + count]));
@@ -56,9 +21,28 @@ Maze::Maze(std::string file){
         }
         y++;
         count += x;
-        if(tmp.size()>0) map_.push_back(tmp);
+        map_.push_back(tmp);
+    }
+    for(int i = map_.size() - 1; map_[i].size() == 0; i--){
+        map_.pop_back();
     }
     dim_ = map_.size();
+    for(int i = 0; i < dim_; i++){
+        while(map_[i].size() < dim_) map_[i].push_back(Cell(' '));
+    }
+    fill_map();
+}
+Maze::Maze(std::string file, int dim)
+:Maze(file)
+{
+    for(int i = dim_; i < dim; i++) map_.push_back(std::vector<Cell>());
+    dim_ = dim;
+    fill_map();
+}
+void Maze::fill_map(){
+    for(int i = 0; i < dim_; i++){
+        while(map_[i].size() < dim_) map_[i].push_back(Cell(' '));
+    }
 }
 Maze::Cell::Cell(const char& val){
     if(val == 'E'){
