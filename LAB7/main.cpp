@@ -13,7 +13,7 @@ int main(){
         while(!rand_rob.move(maze));
         cout<<maze << endl;
         timespec wait;
-        wait.tv_nsec = 50000000;
+        wait.tv_nsec = 100000000;
         timespec t_remain;
         nanosleep(&wait,&t_remain);
         count++;
