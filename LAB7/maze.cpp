@@ -90,8 +90,29 @@ std::ostream& operator<<(std::ostream& os, const std::vector<Maze::Cell>& vec){
     return os;
 }
 std::ostream& operator<<(std::ostream& os, const Maze& val){
+    std::string spacer = "+";
+    for(int i = 0; i < val.size() + 2; i++){
+        spacer += "---+";
+    }
+    os << spacer << std::endl;
+    for(int y = 0; y < val.size(); y++){
+        os << "|\u2588\u2588\u2588";
+        for(int x = 0; x < val.size(); x++){
+            if(!val.map_[y][x].wall_){
+                os << "| " << val.map_[y][x] << " "; 
+            } else {
+                os << "|\u2588\u2588\u2588";
+            }
+        }
+        os << "|\u2588\u2588\u2588|" <<std::endl<< spacer << std::endl;
+    }
+    return os;
+}
+/*
+std::ostream& operator<<(std::ostream& os, const Maze& val){
     for(int i = 0; i < val.size_ ; i++){
         os<<val.map_[i]<<std::endl;
     }
     return os;
 }
+*/

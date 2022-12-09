@@ -16,7 +16,6 @@ int main(){
         wait.tv_nsec = 50000000;
         timespec t_remain;
         nanosleep(&wait,&t_remain);
-        //sleep(1);
         count++;
     }
     cout << count <<endl;
