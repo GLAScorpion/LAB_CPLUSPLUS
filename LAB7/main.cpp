@@ -1,7 +1,7 @@
 #include <iostream>
 #include <time.h>
 #include "maze.h"
-#include "random_robot.h"
+#include "robot_collection.h"
 using namespace std;
 int main(){
     Maze maze("maze.txt");
