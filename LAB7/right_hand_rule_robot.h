@@ -6,7 +6,11 @@
 class RightHandRuleRobot : public Robot{
     public:
         RightHandRuleRobot():Robot(){}
-        bool move(Maze& maze) const override;
+        bool move(Maze& maze) override;
+        void rotate_left();
+        void rotate_right();
     private:
+        int direction_ = 0;
 };
+const std::vector<int> direction_to_offset(int dir);
 #endif // right_hand_rule_robot_h

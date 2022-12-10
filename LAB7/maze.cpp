@@ -16,7 +16,7 @@ Maze::Maze(const std::string& file){
         for(x = 0; isprint(txt[x + count]) and count < txt.size(); x++){
             tmp.push_back(Cell(txt[x + count]));
             if(txt[count + x] == 'S'){
-                robots_.push_back(coord(x,y));
+                robots_.push_back(RobPos(x,y));
             }
         }
         y++;
@@ -27,13 +27,6 @@ Maze::Maze(const std::string& file){
         map_.pop_back();
     }
     size_ = map_.size();
-    fill_map();
-}
-Maze::Maze(const std::string& file, int dim)
-:Maze(file)
-{
-    for(int i = size_; i < dim; i++) map_.push_back(std::vector<Cell>());
-    size_ = dim;
     fill_map();
 }
 Maze::Cell::Cell(const char& val){
@@ -48,15 +41,16 @@ Maze::Cell::Cell(const char& val){
     }
 }
 bool Maze::move(int num, int x_offset, int y_offset){
-    coord pre_move_pos = robots_[num - 1];
-    coord post_move_pos(pre_move_pos.x_ + x_offset,pre_move_pos.y_ + y_offset);
+    if(num < 1) throw std::invalid_argument("Invalid robot index");
+    RobPos pre_move_pos = robots_[num - 1];
+    RobPos post_move_pos(pre_move_pos.x_ + x_offset,pre_move_pos.y_ + y_offset);
     post_move_pos.serial_ = pre_move_pos.serial_;
     if(is_exit(post_move_pos.x_,post_move_pos.y_)){
         map_[pre_move_pos.y_][pre_move_pos.x_] = Cell(' ');
         robots_.erase(robots_.begin() + num - 1);
         return true;
     }
-    if(!is_empty(post_move_pos.x_,post_move_pos.y_) or post_move_pos.x_ >= size_ or post_move_pos.y_ >= size_) return false;
+    if(!is_empty(post_move_pos.x_,post_move_pos.y_)) return false;
     map_[pre_move_pos.y_][pre_move_pos.x_] = Cell(' ');
     map_[post_move_pos.y_][post_move_pos.x_] = Cell('R');
     robots_[num - 1] = post_move_pos;
@@ -68,6 +62,32 @@ int Maze::find_robot(int serial) const{
     }
     return -1;
 }
+/*
+        1
+       -1
+  4 -1  R  1 2
+        1
+        3
+*/
+const std::vector<bool> Maze::wall_pos(int x, int y) const{
+    return {is_wall(x,y - 1),is_wall(x + 1 ,y),is_wall(x,y + 1),is_wall(x - 1,y)};
+}
+bool Maze::is_exit(int x, int y) const {
+    if(!in_range(x,y)) return false;
+    return map_[y][x].exit_;
+    }
+bool Maze::is_wall(int x, int y) const {
+    if(!in_range(x,y)) return true;
+    return map_[y][x].wall_;
+    }
+bool Maze::is_robot(int x, int y) const {
+    if(!in_range(x,y)) return false;
+    return map_[y][x].robot_;
+    }
+bool Maze::is_empty(int x, int y) const {
+    if(!in_range(x,y)) return false;
+    return !(map_[y][x].exit_ or map_[y][x].robot_ or map_[y][x].wall_);
+    }
 void Maze::fill_map(){
     for(int i = 0; i < size_; i++){
         while(map_[i].size() < size_) map_[i].push_back(Cell(' '));

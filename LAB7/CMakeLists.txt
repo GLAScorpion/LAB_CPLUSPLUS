@@ -8,7 +8,6 @@ maze.cpp
 add_executable(maze.bin
 maze.cpp
 main.cpp
-robot.cpp
 random_robot.cpp
 right_hand_rule_robot.cpp
 )

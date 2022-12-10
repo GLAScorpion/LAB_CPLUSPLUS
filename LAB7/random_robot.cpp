@@ -2,7 +2,7 @@
 #include <random>
 #include "random_robot.h"
 
-bool RandomRobot::move(Maze& maze) const{
+bool RandomRobot::move(Maze& maze){
     std::random_device rand_x;
     std::random_device rand_y;
     std::uniform_int_distribution<int> dist(-1, 1);

@@ -5,9 +5,9 @@
 #include <random>
 /*
      -1   0   1
--1    0   1   2
-0     3   R   5
-1     6   7   8
+-1    x   x   x
+0     x   R   x
+1     x   x   x
 
 */
 class Robot{
@@ -18,7 +18,7 @@ class Robot{
             static std::uniform_int_distribution<int> dist(0,INT32_MAX);
             serial_ = dist(rand_serial);
         }
-        virtual bool move(Maze& maze) const = 0;
+        virtual bool move(Maze& maze) = 0;
         int serial() const {return serial_;}
     private:
         int serial_;

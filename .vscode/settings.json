@@ -42,7 +42,10 @@
         "streambuf": "cpp",
         "typeinfo": "cpp",
         "map": "cpp",
-        "thread": "cpp"
+        "thread": "cpp",
+        "chrono": "cpp",
+        "ctime": "cpp",
+        "ratio": "cpp"
     },
     "cmake.configureOnOpen": false,
     "cmake.sourceDirectory": "${workspaceFolder}/LAB4"

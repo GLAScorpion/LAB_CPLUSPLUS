@@ -5,6 +5,6 @@
 class RandomRobot : public Robot{
     public:
     RandomRobot():Robot(){}
-    bool move(Maze& maze) const override;
+    bool move(Maze& maze) override;
 };
 #endif // random_robot_h
