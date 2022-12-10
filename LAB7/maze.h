@@ -32,7 +32,6 @@ class Maze{
             bool exit_ = false;
             Cell(const char& val);
         };
-        void fill_map();
         friend std::ostream& operator<<(std::ostream& os, const Cell& val);
         friend std::ostream& operator<<(std::ostream& os, const std::vector<Cell>& vec);
         std::vector<std::vector<Cell>> map_;

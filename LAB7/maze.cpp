@@ -2,7 +2,6 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include <algorithm>
 Maze::Maze(const std::string& file){
     std::ifstream open_file(file);
     std::string txt;
@@ -27,7 +26,9 @@ Maze::Maze(const std::string& file){
         map_.pop_back();
     }
     size_ = map_.size();
-    fill_map();
+    for(int i = 0; i < size_; i++){
+        while(map_[i].size() < size_) map_[i].push_back(Cell(' '));
+    }
 }
 Maze::Cell::Cell(const char& val){
     if(val == 'E'){
@@ -42,6 +43,7 @@ Maze::Cell::Cell(const char& val){
 }
 bool Maze::move(int num, int x_offset, int y_offset){
     if(num < 1) throw std::invalid_argument("Invalid robot index");
+    if(!x_offset and !y_offset) return false;
     RobPos pre_move_pos = robots_[num - 1];
     RobPos post_move_pos(pre_move_pos.x_ + x_offset,pre_move_pos.y_ + y_offset);
     post_move_pos.serial_ = pre_move_pos.serial_;
@@ -88,11 +90,6 @@ bool Maze::is_empty(int x, int y) const {
     if(!in_range(x,y)) return false;
     return !(map_[y][x].exit_ or map_[y][x].robot_ or map_[y][x].wall_);
     }
-void Maze::fill_map(){
-    for(int i = 0; i < size_; i++){
-        while(map_[i].size() < size_) map_[i].push_back(Cell(' '));
-    }
-}
 std::ostream& operator<<(std::ostream& os, const Maze::Cell& val){
     if(val.exit_){
         return os<<"E";
@@ -131,11 +128,3 @@ std::ostream& operator<<(std::ostream& os, const Maze& val){
     os<<block<<std::endl<<spacer<<std::endl;
     return os;
 }
-/*
-std::ostream& operator<<(std::ostream& os, const Maze& val){
-    for(int i = 0; i < val.size_ ; i++){
-        os<<val.map_[i]<<std::endl;
-    }
-    return os;
-}
-*/
