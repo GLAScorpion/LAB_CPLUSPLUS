@@ -10,4 +10,6 @@ maze.cpp
 main.cpp
 random_robot.cpp
 right_hand_rule_robot.cpp
+pathfinder_robot.cpp
 )
+

@@ -7,7 +7,7 @@ using namespace std;
 int main(){
     Robot* rob;
     Maze maze("maze.txt");
-    cout << maze <<endl<<"Quale robot inizializzare? (random o right_hand)\n";
+    cout << maze <<endl<<"Quale robot inizializzare? (random o right_hand o pathfinder)\n";
     std::string answer;
     bool cicle = false;
     do{
@@ -17,6 +17,8 @@ int main(){
             rob = new RandomRobot;
         }else if(answer == "right_hand"){
             rob = new RightHandRuleRobot;
+        }else if(answer == "pathfinder"){
+            rob = new PathfinderRobot;
         }else{
             cout<<"Unknown answer, retry\n";
             cicle = true;
