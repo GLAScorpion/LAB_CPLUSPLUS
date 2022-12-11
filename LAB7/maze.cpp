@@ -90,6 +90,14 @@ bool Maze::is_empty(int x, int y) const {
     if(!in_range(x,y)) return false;
     return !(map_[y][x].exit_ or map_[y][x].robot_ or map_[y][x].wall_);
     }
+void Maze::make_wall_cell(int x, int y){
+    if(!in_range(x,y)) throw std::invalid_argument("Invalid coordinates");
+    map_[y][x] = Cell('*');
+}
+void Maze::make_empty_cell(int x, int y){
+    if(!in_range(x,y)) throw std::invalid_argument("Invalid coordinates");
+    map_[y][x] = Cell(' ');
+}
 std::ostream& operator<<(std::ostream& os, const Maze::Cell& val){
     if(val.exit_){
         return os<<"E";

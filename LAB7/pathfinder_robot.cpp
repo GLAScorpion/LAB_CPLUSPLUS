@@ -5,10 +5,61 @@
 #include "maze.h"
 #include "robot.h"
 #include "pathfinder_robot.h"
+PathfinderRobot::PathfinderRobot()
+:Robot()
+{
+    std::vector<MoveDir> init;
+    moves_.push(init);
+}
 bool PathfinderRobot::move(Maze& maze){
     const int index = maze.find_robot(serial());
     const Maze::RobPos pos = maze.get_robot(index);
-    MoveDir move = {-1,-1};
+    if(!dummy_.size()) {
+        dummy_ = maze;
+        dummy_.make_empty_cell(pos.x_,pos.y_);
+    }
+    std::vector<MoveDir>& skip = moves_.top();
+    MoveDir move;
+    while(move.y_ != 2 and (maze.is_wall(pos.x_ + move.x_, pos.y_ + move.y_) or find(skip.begin(),skip.end(),move) != skip.end())){
+        next_move_dir(move);
+        //std::cout<<move.y_<<" "<<move.x_<<maze.is_wall(pos.x_ + move.x_, pos.y_ + move.y_)<<std::endl;
+    }
+    //std::cin.get();
+    if(move.y_ == 2){
+        //std::cout<<"flag\n";
+        move = skip[0];
+        if(maze.move(index,move.x_,move.y_)){
+            moves_.pop();
+            return true;
+        }
+        return false;
+    }
+    if(maze.move(index,move.x_,move.y_)){
+        skip.push_back(move);
+        negate(move);
+        std::vector<MoveDir> new_moves{move};
+        moves_.push(new_moves);
+        return true;
+    }
+    return false;
+}
+bool PathfinderRobot::MoveDir::operator==(const MoveDir& mov){
+    return x_ == mov.x_ and y_ == mov.y_;
+}
+void PathfinderRobot::next_move_dir(PathfinderRobot::MoveDir& mov){
+    mov.x_++;
+    if(mov.x_ == 2){
+        mov.x_ = -1;
+        mov.y_++;
+    }
+    if(!mov.y_ and !mov.x_) mov.y_++;
+}
+void PathfinderRobot::negate(MoveDir& mov){
+    mov.x_ = -mov.x_;
+    mov.y_ = -mov.y_;
+}
+/*
+MoveDir move = {-1,-1};
     std::vector<MoveDir> prev_move;
     std::vector<MoveDir> skip;
     if(moves_.size()){ 
@@ -41,11 +92,4 @@ bool PathfinderRobot::move(Maze& maze){
     }
     moves_.push({x,y});
     return maze.move(index,x,y);
-}
-void PathfinderRobot::next_move_dir(PathfinderRobot::MoveDir& mov){
-    mov.x_++;
-    if(mov.x_ == 2){
-        mov.x_ = -1;
-        mov.y_++;
-    }
-}
+*/
