@@ -10,7 +10,7 @@ class PathfinderRobot : public Robot{
         PathfinderRobot(){};
         explicit PathfinderRobot(const Maze& maze);
         bool move(Maze& maze) override;
-        Robot* clone_pointer() override;
+        Robot* clone_pointer() const override;
     private:
         struct MoveDir{
             int x_;
@@ -19,7 +19,7 @@ class PathfinderRobot : public Robot{
             MoveDir():x_{-1},y_{-1}{}
             bool operator==(const MoveDir& mov);
         };
-        bool is_passable(int x, int y);
+        bool is_passable(int x, int y) const;
         void next_move_dir(MoveDir& mov);
         void negate(MoveDir& mov);
         std::vector<std::vector<bool>> dummy_;

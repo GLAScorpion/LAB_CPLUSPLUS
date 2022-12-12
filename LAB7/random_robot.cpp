@@ -15,7 +15,7 @@ bool RandomRobot::move(Maze& maze){
     int pos = maze.find_robot(serial());
     return maze.move(pos, x, y );
 }
-Robot* RandomRobot::clone_pointer(){
+Robot* RandomRobot::clone_pointer() const{
     RandomRobot* tmp = new RandomRobot;
     tmp->set_serial(serial());
     return tmp;

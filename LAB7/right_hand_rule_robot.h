@@ -7,7 +7,7 @@ class RightHandRuleRobot : public Robot{
     public:
         RightHandRuleRobot():Robot(){}
         bool move(Maze& maze) override;
-        Robot* clone_pointer() override;
+        Robot* clone_pointer() const override;
         void rotate_left();
         void rotate_right();
     private:

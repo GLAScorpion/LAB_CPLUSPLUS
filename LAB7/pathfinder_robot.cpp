@@ -45,7 +45,7 @@ bool PathfinderRobot::move(Maze& maze){
     }
     return false;
 }
-Robot* PathfinderRobot::clone_pointer(){
+Robot* PathfinderRobot::clone_pointer() const{
     PathfinderRobot* tmp = new PathfinderRobot;
     tmp->set_serial(serial());
     tmp->dummy_ = dummy_;
@@ -55,7 +55,7 @@ Robot* PathfinderRobot::clone_pointer(){
 bool PathfinderRobot::MoveDir::operator==(const MoveDir& mov){
     return x_ == mov.x_ and y_ == mov.y_;
 }
-bool PathfinderRobot::is_passable(int x, int y){
+bool PathfinderRobot::is_passable(int x, int y) const{
     if(x < 0 or y < 0 or x >= dummy_[0].size() or y >= dummy_.size()) return false;
     return dummy_[y][x];
 }
