@@ -34,6 +34,12 @@ bool RightHandRuleRobot::move(Maze& maze){
     rotate_left();
     return true;
 }
+Robot* RightHandRuleRobot::clone_pointer(){
+    RightHandRuleRobot* tmp = new RightHandRuleRobot;
+    tmp->set_serial(serial());
+    tmp->direction_ = direction_;
+    return tmp;
+}
 void RightHandRuleRobot::rotate_left(){
     direction_--;
     if(!direction_) direction_ = 4;

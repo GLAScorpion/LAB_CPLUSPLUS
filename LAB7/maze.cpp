@@ -2,17 +2,13 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-Maze::Maze(const Maze& maze)
-:size_{maze.size_},robots_{maze.robots_}
-{   
-    std::copy(maze.map_.begin(),maze.map_.end(),map_.begin());
-}
 
 Maze::Maze(const std::string& file){
     std::ifstream open_file(file);
     std::string txt;
     std::getline(open_file,txt,'\0');
     open_file.close();
+    if(!txt.size()) throw std::invalid_argument("File not found");
     std::vector<Cell> tmp;
     int x = 0;
     int y = 0;
@@ -31,9 +27,12 @@ Maze::Maze(const std::string& file){
     for(int i = map_.size() - 1; map_[i].size() == 0; i--){
         map_.pop_back();
     }
-    size_ = map_.size();
-    for(int i = 0; i < size_; i++){
-        while(map_[i].size() < size_) map_[i].push_back(Cell(' '));
+    size_y_ = map_.size();
+    for(int i = 0; i < size_y_;i++){
+        if(map_[i].size() > size_x_) size_x_ = map_[i].size();
+    }
+    for(int i = 0; i < size_x_; i++){
+        while(map_[i].size() < size_x_) map_[i].push_back(Cell(' '));
     }
 }
 Maze::Cell::Cell(const char& val){
@@ -115,14 +114,14 @@ std::ostream& operator<<(std::ostream& os, const std::vector<Maze::Cell>& vec){
 std::ostream& operator<<(std::ostream& os, const Maze& val){
     std::string spacer = "+";
     std::string block = "|";
-    for(int i = 0; i < val.size() + 2; i++){
+    for(int i = 0; i < val.size_x_ + 2; i++){
         spacer += "---+";
         block += "\u2588\u2588\u2588|";
     }
     os << spacer << std::endl << block << std::endl << spacer << std::endl;
-    for(int y = 0; y < val.size(); y++){
+    for(int y = 0; y < val.size_y_; y++){
         os << "|\u2588\u2588\u2588";
-        for(int x = 0; x < val.size(); x++){
+        for(int x = 0; x < val.size_x_; x++){
             if(!val.map_[y][x].wall_){
                 os << "| " << val.map_[y][x] << " "; 
             } else {

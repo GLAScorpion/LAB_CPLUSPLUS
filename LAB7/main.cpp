@@ -6,9 +6,14 @@
 using namespace std;
 int main(){
     Robot* rob;
-    Maze maze("maze.txt");
-    cout << maze <<endl<<"Quale robot inizializzare? (random o right_hand o pathfinder)\n";
     std::string answer;
+    cout<<"Scrivi il nome del file contenente il labirinto (con estensione)\n";
+    cin>>answer;
+    //Maze maze("big_maze.txt");
+    //Maze maze("maze.txt");
+    //Maze maze("ultra_maze.txt");
+    Maze maze(answer);
+    cout << maze <<endl<<"Quale robot inizializzare? (random o right_hand o pathfinder)\n";
     bool cicle = false;
     do{
         cicle = false;
@@ -30,11 +35,11 @@ int main(){
         while(!rob->move(maze));
         cout<<maze << endl;
         timespec wait;
-        wait.tv_nsec = 300000000;
+        wait.tv_nsec = 50000000;
         timespec t_remain;
         nanosleep(&wait,&t_remain);
         //sleep(1);
         count++;
     }
-    cout << count <<endl;
+    cout << "Mosse valide eseguite: "<< count <<endl;
 }

@@ -3,4 +3,5 @@
 #include "random_robot.h"
 #include "right_hand_rule_robot.h"
 #include "pathfinder_robot.h"
+#include "dummy_bot.h"
 #endif

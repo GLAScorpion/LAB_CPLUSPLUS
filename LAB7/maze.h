@@ -12,7 +12,6 @@ class Maze{
             int serial_ = 0;
         };
         Maze(){}
-        Maze(const Maze& maze);
         explicit Maze(const std::string& file);
         bool move(int num, int x_offset, int y_offset);
         int find_robot(int serial) const;
@@ -21,8 +20,9 @@ class Maze{
         bool is_wall(int x, int y) const;
         bool is_robot(int x, int y) const;
         bool is_empty(int x, int y) const;
-        bool in_range(int x, int y) const {return x < size_ and y < size_ and y >= 0 and x >= 0;}
-        int size() const {return size_;}
+        bool in_range(int x, int y) const {return x < size_x_ and y < size_y_ and y >= 0 and x >= 0;}
+        int size_y() const {return size_y_;}
+        int size_x() const {return size_x_;}
         const RobPos& get_robot(int num) const {return robots_.at(num - 1);}
         int get_robot_count() const {return robots_.size();}
         void set_robot(int num, int serial){robots_.at(num - 1).serial_ = serial;}
@@ -38,6 +38,7 @@ class Maze{
         friend std::ostream& operator<<(std::ostream& os, const std::vector<Cell>& vec);
         std::vector<std::vector<Cell>> map_;
         std::vector<RobPos> robots_;
-        int size_;
+        int size_y_;
+        int size_x_;
 };
 #endif // maze_h
