@@ -7,7 +7,7 @@
 #include "robot.h"
 class PathfinderRobot : public Robot{
     public:
-        PathfinderRobot();
+        PathfinderRobot(const Maze& maze);
         bool move(Maze& maze) override;
     private:
         struct MoveDir{
@@ -17,7 +17,8 @@ class PathfinderRobot : public Robot{
             MoveDir():x_{-1},y_{-1}{}
             bool operator==(const MoveDir& mov);
         };
-        Maze dummy_;
+        bool is_passable(int x, int y);
+        std::vector<std::vector<bool>> dummy_;
         std::stack<std::vector<MoveDir>> moves_;
         void next_move_dir(MoveDir& mov);
         void negate(MoveDir& mov);

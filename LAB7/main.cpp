@@ -18,7 +18,7 @@ int main(){
         }else if(answer == "right_hand"){
             rob = new RightHandRuleRobot;
         }else if(answer == "pathfinder"){
-            rob = new PathfinderRobot;
+            rob = new PathfinderRobot(maze);
         }else{
             cout<<"Unknown answer, retry\n";
             cicle = true;
