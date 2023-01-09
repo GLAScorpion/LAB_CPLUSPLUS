@@ -11,7 +11,7 @@ class RobotController{
         bool move_all(); 
         void set_robot(Robot* robot, int num);
         int find_robot(int serial) const;
-        friend std::ostream& operator<<(std::ostream& os, const RobotController& controller);
+        friend std::ostream& operator<<(std::ostream& os, const RobotController& controller){return os<<controller.maze_;}
         int get_robot_count() const {return robots_.size();}
         int get_robot_serial(int num) const {return robots_.at(num - 1)->serial();}
     private:

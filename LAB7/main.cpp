@@ -33,6 +33,7 @@ int main(){
     int count = 0;
     while(maze.find_robot(rob->serial())!= -1){
         while(!rob->move(maze));
+        system("clear");
         cout<<maze << endl;
         timespec wait;
         wait.tv_nsec = 50000000;

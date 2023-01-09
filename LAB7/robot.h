@@ -22,7 +22,7 @@ class Robot{
         Robot(const Robot&) = delete;
         Robot& operator=(const Robot&) = delete;
         //returns a pointer to a clone of this, uses the "new" operator, garbage collection needed in case of use
-        virtual Robot* clone_pointer() const;
+        virtual Robot* clone_pointer() const{return nullptr;}
         virtual bool move(Maze& maze) = 0;
         void set_serial(int serial){
             if(serial < 0 or serial > INT32_MAX) throw std::invalid_argument("Invalid serial format");

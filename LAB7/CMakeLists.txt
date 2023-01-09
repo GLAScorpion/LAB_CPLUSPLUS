@@ -12,3 +12,11 @@ random_robot.cpp
 right_hand_rule_robot.cpp
 pathfinder_robot.cpp
 )
+add_executable(maze_with_controller.bin
+maze.cpp
+controller_tester.cpp
+random_robot.cpp
+right_hand_rule_robot.cpp
+pathfinder_robot.cpp
+robot_controller.cpp
+)

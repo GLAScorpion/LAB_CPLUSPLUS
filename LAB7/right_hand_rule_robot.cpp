@@ -24,11 +24,11 @@ bool RightHandRuleRobot::move(Maze& maze){
     std::vector<int> dir_offset = direction_to_offset(direction_);
     rotate_right();
     std::vector<int> prev_wall_pos = direction_to_offset(direction_);
-    if(!maze.is_wall(pos.x_ + prev_wall_pos[0] + dir_offset[0], pos.y_ + prev_wall_pos[1] + dir_offset[1])){
+    if(maze.empty_or_exit(pos.x_ + prev_wall_pos[0] + dir_offset[0], pos.y_ + prev_wall_pos[1] + dir_offset[1])){
         return maze.move(index, prev_wall_pos[0] + dir_offset[0], prev_wall_pos[1] + dir_offset[1]);
     }
     rotate_left();
-    if(!maze.is_wall(pos.x_ + dir_offset[0], pos.y_ + dir_offset[1])){
+    if(maze.empty_or_exit(pos.x_ + dir_offset[0], pos.y_ + dir_offset[1])){
         return maze.move(index, dir_offset[0], dir_offset[1]);
     }
     rotate_left();

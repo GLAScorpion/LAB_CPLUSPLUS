@@ -20,6 +20,7 @@ class Maze{
         bool is_wall(int x, int y) const;
         bool is_robot(int x, int y) const;
         bool is_empty(int x, int y) const;
+        bool empty_or_exit(int x, int y) const{return is_empty(x,y) or is_exit(x,y);}
         bool in_range(int x, int y) const {return x < size_x_ and y < size_y_ and y >= 0 and x >= 0;}
         int size_y() const {return size_y_;}
         int size_x() const {return size_x_;}
